@@ -2031,7 +2031,11 @@ class Parser(object):
         return self.parser.parse(prefix + code, lexer=self.lexer, debug=debug)
 
     def parse_file(self, _file, debug=0):
-        if type(_file) == str:
+        # Since path can be either str or unicode
+        # If unicode object, thinking it as file obj
+        # and performing read on it
+        if (type(_file) == str or 
+            type(_file) == unicode):
             _file = open(_file)
         content = _file.read()
         return self.parse_string(content, debug=debug)
